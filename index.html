@@ -1,70 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glosar Complex IT</title>
+    <title>Glosar Complex IT - Control 1.1</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
-        .search-container { position: sticky; top: 0; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 6px; border-left: 5px solid #2196F3; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .term { font-weight: bold; color: #1a73e8; font-size: 1.2em; display: block; margin-bottom: 5px; }
-        .category { font-size: 0.8em; background: #e8f0fe; color: #1967d2; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; }
-        .source { font-size: 0.75em; color: #777; font-style: italic; margin-top: 10px; display: block; }
-        #counter { margin-top: 10px; font-size: 0.9em; color: #555; }
+        :root { --primary: #1a73e8; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--bg); color: #333; }
+        
+        /* Header și Căutare */
+        .header { position: sticky; top: 0; background: white; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; }
+        input { width: 100%; padding: 12px; border: 2px solid #dfe1e5; border-radius: 24px; font-size: 16px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
+
+        /* Tab-uri Categorii */
+        .tabs-container { display: flex; overflow-x: auto; padding: 10px 0; gap: 10px; scrollbar-width: none; }
+        .tabs-container::-webkit-scrollbar { display: none; }
+        .tab-btn { padding: 8px 16px; background: #fff; border: 1px solid #dfe1e5; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Alfabet A-Z */
+        .alphabet { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 10px 0; padding: 5px; background: #eee; border-radius: 8px; }
+        .letter { padding: 5px 8px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 0.9em; }
+        .letter:hover { background: var(--primary); color: white; }
+
+        /* Carduri */
+        .content { padding: 20px; max-width: 800px; margin: auto; }
+        .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 6px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .term { font-weight: bold; color: var(--primary); font-size: 1.3em; display: block; }
+        .source { font-size: 0.8em; color: #666; font-style: italic; display: block; margin-top: 10px; }
+        #counter { text-align: center; font-size: 0.9em; color: #666; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="Caută un termen sau o definiție (ex: CPU, RAM, Algorithm)...">
-    <div id="counter">Se încarcă baza de date...</div>
+<div class="header">
+    <input type="text" id="searchInput" placeholder="Caută în peste 3.800 de termeni...">
+    
+    <div class="tabs-container" id="categoryTabs">
+        <button class="tab-btn active" onclick="filterCategory('All')">Toate</button>
+        <button class="tab-btn" onclick="filterCategory('Hardware')">Hardware</button>
+        <button class="tab-btn" onclick="filterCategory('Programming')">Programare</button>
+        <button class="tab-btn" onclick="filterCategory('Networking')">Rețele</button>
+        <button class="tab-btn" onclick="filterCategory('Security')">Securitate</button>
+        <button class="tab-btn" onclick="filterCategory('Quantum')">Quantum</button>
+    </div>
+
+    <div class="alphabet" id="alphabet"></div>
+    <div id="counter">Se încarcă...</div>
 </div>
 
-<div id="results"></div>
+<div class="content" id="results"></div>
 
 <script>
-    // Baza de date inițială extrasă din sursele tale
+    // Exemplu de date consolidate
     const glossary = [
-        { term: "CPU", category: "Hardware", source: "B_C_T.pdf", definition: "Central Processing Unit. The processing chip that is the 'brains' of a computer." },
-        { term: "RAM", category: "Hardware", source: "B_C_T.pdf", definition: "Random-Access Memory. Temporary storage area used while data is being processed." },
-        { term: "Algorithm", category: "Logic", source: "Glossary.pdf", definition: "A step-by-step solution to a given problem with a beginning and an end." },
-        { term: "Bit", category: "Units", source: "B_C_T.pdf", definition: "The smallest unit of information (1 or 0)." },
-        { term: "Byte", category: "Units", source: "B_C_T.pdf", definition: "A piece of information formed by eight bits." },
-        { term: "Class", category: "Programming", source: "Glossary.pdf", definition: "A user-generated data type used as a template for creating objects." }
+        { term: "Algorithm", category: "Programming", source: "Glossary.pdf", definition: "O soluție pas cu pas pentru o problemă dată." },
+        { term: "Bit", category: "Units", source: "B_C_T.pdf", definition: "Cea mai mică unitate de informație (1 sau 0)." },
+        { term: "CPU", category: "Hardware", source: "B_C_T.pdf", definition: "Central Processing Unit. Creierul computerului." },
+        { term: "Entanglement", category: "Quantum", source: "IBM Think", definition: "Corelarea instantanee a doi qubiți." },
+        { term: "Firewall", category: "Security", source: "Coursera", definition: "Sistem de protecție pentru traficul de rețea." },
+        { term: "Qubit", category: "Quantum", source: "IBM Think", definition: "Unitatea de bază a informației cuantice." },
+        { term: "RAM", category: "Hardware", source: "B_C_T.pdf", definition: "Memorie temporară pentru procesarea datelor." }
     ];
 
-    const searchInput = document.getElementById('searchInput');
-    const resultsDiv = document.getElementById('results');
-    const counter = document.getElementById('counter');
+    let currentCategory = 'All';
 
-    function displayResults(data) {
-        resultsDiv.innerHTML = '';
-        data.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <span class="category">${item.category}</span>
-                <span class="term">${item.term}</span>
-                <p>${item.definition}</p>
-                <span class="source">Sursa: ${item.source}</span>
-            `;
-            resultsDiv.appendChild(card);
-        });
-        counter.innerText = `Rezultate găsite: ${data.length} termeni.`;
-    }
-
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        const filtered = glossary.filter(item => 
-            item.term.toLowerCase().includes(query) || 
-            item.definition.toLowerCase().includes(query)
-        );
-        displayResults(filtered);
+    // Generare Alfabet
+    const alphaDiv = document.getElementById('alphabet');
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(l => {
+        const span = document.createElement('span');
+        span.className = 'letter';
+        span.innerText = l;
+        span.onclick = () => { searchInput.value = l; filterData(); };
+        alphaDiv.appendChild(span);
     });
 
+    function filterCategory(cat) {
+        currentCategory = cat;
+        // Update styling butoane
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.innerText === (cat === 'All' ? 'Toate' : cat));
+        });
+        filterData();
+    }
+
+    function filterData() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = glossary.filter(item => {
+            const matchesQuery = item.term.toLowerCase().startsWith(query) || item.definition.toLowerCase().includes(query);
+            const matchesCat = (currentCategory === 'All' || item.category === currentCategory);
+            return matchesQuery && matchesCat;
+        });
+        displayResults(filtered);
+    }
+
+    function displayResults(data) {
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+        data.forEach(item => {
+            resultsDiv.innerHTML += `
+                <div class="card">
+                    <span class="term">${item.term}</span>
+                    <p>${item.definition}</p>
+                    <span class="source">Sursa: ${item.source} | Categorie: ${item.category}</span>
+                </div>
+            `;
+        });
+        document.getElementById('counter').innerText = `${data.length} termeni afișați`;
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterData);
+    
     // Inițializare
     displayResults(glossary);
 </script>
