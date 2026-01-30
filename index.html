@@ -1,1 +1,73 @@
 
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosar Complex IT</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
+        .search-container { position: sticky; top: 0; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 6px; border-left: 5px solid #2196F3; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .term { font-weight: bold; color: #1a73e8; font-size: 1.2em; display: block; margin-bottom: 5px; }
+        .category { font-size: 0.8em; background: #e8f0fe; color: #1967d2; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; }
+        .source { font-size: 0.75em; color: #777; font-style: italic; margin-top: 10px; display: block; }
+        #counter { margin-top: 10px; font-size: 0.9em; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Caută un termen sau o definiție (ex: CPU, RAM, Algorithm)...">
+    <div id="counter">Se încarcă baza de date...</div>
+</div>
+
+<div id="results"></div>
+
+<script>
+    // Baza de date inițială extrasă din sursele tale
+    const glossary = [
+        { term: "CPU", category: "Hardware", source: "B_C_T.pdf", definition: "Central Processing Unit. The processing chip that is the 'brains' of a computer." },
+        { term: "RAM", category: "Hardware", source: "B_C_T.pdf", definition: "Random-Access Memory. Temporary storage area used while data is being processed." },
+        { term: "Algorithm", category: "Logic", source: "Glossary.pdf", definition: "A step-by-step solution to a given problem with a beginning and an end." },
+        { term: "Bit", category: "Units", source: "B_C_T.pdf", definition: "The smallest unit of information (1 or 0)." },
+        { term: "Byte", category: "Units", source: "B_C_T.pdf", definition: "A piece of information formed by eight bits." },
+        { term: "Class", category: "Programming", source: "Glossary.pdf", definition: "A user-generated data type used as a template for creating objects." }
+    ];
+
+    const searchInput = document.getElementById('searchInput');
+    const resultsDiv = document.getElementById('results');
+    const counter = document.getElementById('counter');
+
+    function displayResults(data) {
+        resultsDiv.innerHTML = '';
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <span class="category">${item.category}</span>
+                <span class="term">${item.term}</span>
+                <p>${item.definition}</p>
+                <span class="source">Sursa: ${item.source}</span>
+            `;
+            resultsDiv.appendChild(card);
+        });
+        counter.innerText = `Rezultate găsite: ${data.length} termeni.`;
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = glossary.filter(item => 
+            item.term.toLowerCase().includes(query) || 
+            item.definition.toLowerCase().includes(query)
+        );
+        displayResults(filtered);
+    });
+
+    // Inițializare
+    displayResults(glossary);
+</script>
+
+</body>
+</html>
