@@ -74,4 +74,16 @@ const glossaryData = [
     { term: "Virtual Private Cloud (VPC)", category: "Cloud", source: "Glossary.pdf", definition: "O rețea privată virtuală izolată în cadrul unui cloud public." },
     { term: "Wearable Technology", category: "Hardware", source: "B_C_T.pdf", definition: "Dispozitive electronice inteligente care pot fi purtate pe corp ca accesorii sau îmbrăcăminte." },
     // --- END BLOC 7: CLOUD & TEHNOLOGII NOI ---
+    // --- START BLOC 8: RESTUL ALFABETULUI & TERMENI FINALI ---
+    { term: "Database Management System (DBMS)", category: "Software", source: "Glossary.pdf", definition: "Software utilizat pentru a crea, gestiona și interacționa cu baze de date (ex: MySQL, Oracle)." },
+    { term: "Debugging", category: "Programming", source: "Glossary.pdf", definition: "Procesul de identificare și corectare a erorilor dintr-un program de calculator." },
+    { term: "Input/Output (I/O)", category: "Hardware", source: "B_C_T.pdf", definition: "Procesul prin care un computer primește date din exterior sau trimite rezultate către utilizator." },
+    { term: "Object-Oriented Programming (OOP)", category: "Programming", source: "Glossary.pdf", definition: "Paradigmă de programare bazată pe obiecte care conțin date sub formă de câmpuri și cod." },
+    { term: "Peripherals", category: "Hardware", source: "B_C_T.pdf", definition: "Dispozitive externe conectate la computer (ex: tastatură, mouse, imprimantă)." },
+    { term: "Redundancy", category: "Hardware", source: "B_C_T.pdf", definition: "Duplicarea componentelor critice ale unui sistem pentru a asigura funcționarea în caz de defecțiune." },
+    { term: "Router", category: "Networking", source: "B_C_T.pdf", definition: "Dispozitiv de rețea care direcționează pachetele de date între rețele de calculatoare." },
+    { term: "Syntax Error", category: "Programming", source: "Glossary.pdf", definition: "Greșeală în regulile gramaticale ale unui limbaj de programare care previne execuția codului." },
+    { term: "UPS (Uninterruptible Power Supply)", category: "Hardware", source: "B_C_T.pdf", definition: "Dispozitiv care oferă energie de rezervă în cazul unei căderi de curent electric." },
+    { term: "Wireless Access Point (WAP)", category: "Networking", source: "B_C_T.pdf", definition: "Dispozitiv care permite echipamentelor Wi-Fi să se conecteze la o rețea cablată." }
+    // --- END BLOC 8: RESTUL ALFABETULUI & TERMENI FINALI ---
 ];
