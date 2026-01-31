@@ -62,4 +62,16 @@ const glossaryData = [
     { term: "Resolution", category: "Hardware", source: "B_C_T.pdf", definition: "Numărul total de pixeli afișați pe un ecran, exprimat de obicei prin lățime x înălțime." },
     { term: "Terabyte (TB)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură pentru capacitatea de stocare, egală cu aproximativ 1.000 de Gigabyți." },
     // --- END BLOC 6: UNITĂȚI DE MĂSURĂ & STANDARDE ---
+    // --- START BLOC 7: CLOUD & TEHNOLOGII NOI ---
+    { term: "Cloud Computing", category: "Networking", source: "Glossary.pdf", definition: "Livrarea de resurse IT la cerere prin internet, cu plată în funcție de utilizare." },
+    { term: "Edge Computing", category: "Networking", source: "Coursera", definition: "Procesarea datelor cât mai aproape de locul în care sunt generate, pentru a reduce latența." },
+    { term: "Infrastructure as a Service (IaaS)", category: "Cloud", source: "Glossary.pdf", definition: "Model de servicii cloud care oferă resurse de calcul virtualizate prin internet." },
+    { term: "Internet of Things (IoT)", category: "Networking", source: "B_C_T.pdf", definition: "Rețea de obiecte fizice echipate cu senzori și software pentru a colecta și schimba date." },
+    { term: "Platform as a Service (PaaS)", category: "Cloud", source: "Glossary.pdf", definition: "Platformă care permite clienților să dezvolte, ruleze și gestioneze aplicații fără a construi infrastructura." },
+    { term: "Quantum Bit (Qubit)", category: "Hardware", source: "IBM", definition: "Unitatea de bază a informației cuantice, care poate exista în mai multe stări simultan (suprapunere)." },
+    { term: "SaaS (Software as a Service)", category: "Cloud", source: "Glossary.pdf", definition: "Model de distribuție software în care aplicațiile sunt găzduite de un furnizor și accesate prin web." },
+    { term: "Serverless Computing", category: "Cloud", source: "Coursera", definition: "Model de execuție în care furnizorul de cloud gestionează automat alocarea resurselor mașinii." },
+    { term: "Virtual Private Cloud (VPC)", category: "Cloud", source: "Glossary.pdf", definition: "O rețea privată virtuală izolată în cadrul unui cloud public." },
+    { term: "Wearable Technology", category: "Hardware", source: "B_C_T.pdf", definition: "Dispozitive electronice inteligente care pot fi purtate pe corp ca accesorii sau îmbrăcăminte." },
+    // --- END BLOC 7: CLOUD & TEHNOLOGII NOI ---
 ];
