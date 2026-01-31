@@ -50,4 +50,16 @@ const glossaryData = [
     { term: "System Software", category: "Software", source: "B_C_T.pdf", definition: "Software-ul de bază creat pentru a controla hardware-ul și a oferi o platformă pentru aplicații." },
     { term: "Virtual Machine (VM)", category: "Software", source: "B_C_T.pdf", definition: "Emularea unui sistem informatic care rulează ca un program în interiorul altui sistem de operare." },
     // --- END BLOC 5: SOFTWARE & SISTEME DE OPERARE ---
+    // --- START BLOC 6: UNITĂȚI DE MĂSURĂ & STANDARDE ---
+    { term: "Bit (b)", category: "Units", source: "B_C_T.pdf", definition: "Cea mai mică unitate de date dintr-un computer, având valoarea 0 sau 1." },
+    { term: "Byte (B)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură egală cu 8 biți; unitatea de bază pentru stocarea datelor." },
+    { term: "Gigahertz (GHz)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură pentru frecvența ceasului unui procesor, reprezentând un miliard de cicluri pe secundă." },
+    { term: "Hertz (Hz)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură a frecvenței, egală cu un ciclu pe secundă." },
+    { term: "IEEE 802.11", category: "Networking", source: "B_C_T.pdf", definition: "Set de standarde pentru comunicații în rețele locale fără fir (Wi-Fi)." },
+    { term: "Latency", category: "Units", source: "B_C_T.pdf", definition: "Timpul de întârziere dintre o comandă și execuția acesteia sau primirea datelor." },
+    { term: "Megabit per second (Mbps)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură pentru viteza de transfer a datelor în rețele." },
+    { term: "Pixel", category: "Units", source: "B_C_T.pdf", definition: "Cea mai mică unitate controlabilă a unei imagini afișate pe un ecran." },
+    { term: "Resolution", category: "Hardware", source: "B_C_T.pdf", definition: "Numărul total de pixeli afișați pe un ecran, exprimat de obicei prin lățime x înălțime." },
+    { term: "Terabyte (TB)", category: "Units", source: "B_C_T.pdf", definition: "Unitate de măsură pentru capacitatea de stocare, egală cu aproximativ 1.000 de Gigabyți." },
+    // --- END BLOC 6: UNITĂȚI DE MĂSURĂ & STANDARDE ---
 ];
