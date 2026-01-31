@@ -3,118 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glosar Complex IT - Control 1.1</title>
+    <title>Glosar IT Complex - Control 1.2</title>
     <style>
         :root { --primary: #1a73e8; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--bg); color: #333; }
-        
-        /* Header și Căutare */
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
         .header { position: sticky; top: 0; background: white; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; }
-        input { width: 100%; padding: 12px; border: 2px solid #dfe1e5; border-radius: 24px; font-size: 16px; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
-
-        /* Tab-uri Categorii */
-        .tabs-container { display: flex; overflow-x: auto; padding: 10px 0; gap: 10px; scrollbar-width: none; }
-        .tabs-container::-webkit-scrollbar { display: none; }
-        .tab-btn { padding: 8px 16px; background: #fff; border: 1px solid #dfe1e5; border-radius: 20px; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+        .search-box { width: 100%; padding: 12px; border: 2px solid #dfe1e5; border-radius: 24px; font-size: 16px; outline: none; }
+        .tabs-container { display: flex; overflow-x: auto; padding: 10px 0; gap: 8px; }
+        .tab-btn { padding: 8px 16px; background: white; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; white-space: nowrap; }
         .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        /* Alfabet A-Z */
-        .alphabet { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 10px 0; padding: 5px; background: #eee; border-radius: 8px; }
-        .letter { padding: 5px 8px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 0.9em; }
-        .letter:hover { background: var(--primary); color: white; }
-
-        /* Carduri */
-        .content { padding: 20px; max-width: 800px; margin: auto; }
-        .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 6px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .term { font-weight: bold; color: var(--primary); font-size: 1.3em; display: block; }
-        .source { font-size: 0.8em; color: #666; font-style: italic; display: block; margin-top: 10px; }
-        #counter { text-align: center; font-size: 0.9em; color: #666; margin-bottom: 10px; }
+        .alphabet { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-top: 10px; }
+        .letter { padding: 5px 8px; cursor: pointer; font-weight: bold; font-size: 0.85em; background: #eee; border-radius: 4px; }
+        .card { background: white; padding: 20px; margin: 15px auto; max-width: 800px; border-radius: 8px; border-left: 6px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .term { font-weight: bold; color: var(--primary); font-size: 1.2em; }
+        .source-tag { font-size: 0.75em; color: #888; display: block; margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <input type="text" id="searchInput" placeholder="Caută în peste 3.800 de termeni...">
-    
+    <input type="text" id="searchInput" class="search-box" placeholder="Caută în baza de date (B_C_T, Glossary, IBM, etc)...">
     <div class="tabs-container" id="categoryTabs">
-        <button class="tab-btn active" onclick="filterCategory('All')">Toate</button>
-        <button class="tab-btn" onclick="filterCategory('Hardware')">Hardware</button>
-        <button class="tab-btn" onclick="filterCategory('Programming')">Programare</button>
-        <button class="tab-btn" onclick="filterCategory('Networking')">Rețele</button>
-        <button class="tab-btn" onclick="filterCategory('Security')">Securitate</button>
-        <button class="tab-btn" onclick="filterCategory('Quantum')">Quantum</button>
+        <button class="tab-btn active" onclick="setCategory('All')">Toate</button>
+        <button class="tab-btn" onclick="setCategory('Hardware')">Hardware</button>
+        <button class="tab-btn" onclick="setCategory('Programming')">Programare</button>
+        <button class="tab-btn" onclick="setCategory('Security')">Securitate</button>
+        <button class="tab-btn" onclick="setCategory('Quantum')">Quantum</button>
     </div>
-
-    <div class="alphabet" id="alphabet"></div>
-    <div id="counter">Se încarcă...</div>
+    <div class="alphabet" id="alphaNav"></div>
 </div>
 
-<div class="content" id="results"></div>
+<div id="results"></div>
+
+<script src="database.js"></script>
 
 <script>
-    // Exemplu de date consolidate
-    const glossary = [
-        { term: "Algorithm", category: "Programming", source: "Glossary.pdf", definition: "O soluție pas cu pas pentru o problemă dată." },
-        { term: "Bit", category: "Units", source: "B_C_T.pdf", definition: "Cea mai mică unitate de informație (1 sau 0)." },
-        { term: "CPU", category: "Hardware", source: "B_C_T.pdf", definition: "Central Processing Unit. Creierul computerului." },
-        { term: "Entanglement", category: "Quantum", source: "IBM Think", definition: "Corelarea instantanee a doi qubiți." },
-        { term: "Firewall", category: "Security", source: "Coursera", definition: "Sistem de protecție pentru traficul de rețea." },
-        { term: "Qubit", category: "Quantum", source: "IBM Think", definition: "Unitatea de bază a informației cuantice." },
-        { term: "RAM", category: "Hardware", source: "B_C_T.pdf", definition: "Memorie temporară pentru procesarea datelor." }
-    ];
-
     let currentCategory = 'All';
+    const searchInput = document.getElementById('searchInput');
 
     // Generare Alfabet
-    const alphaDiv = document.getElementById('alphabet');
+    const alphaNav = document.getElementById('alphaNav');
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(l => {
-        const span = document.createElement('span');
+        const span = document.createElement('div');
         span.className = 'letter';
         span.innerText = l;
         span.onclick = () => { searchInput.value = l; filterData(); };
-        alphaDiv.appendChild(span);
+        alphaNav.appendChild(span);
     });
 
-    function filterCategory(cat) {
+    function setCategory(cat) {
         currentCategory = cat;
-        // Update styling butoane
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.innerText === (cat === 'All' ? 'Toate' : cat));
-        });
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(cat) || (cat === 'All' && b.innerText === 'Toate')));
         filterData();
     }
 
     function filterData() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = glossary.filter(item => {
-            const matchesQuery = item.term.toLowerCase().startsWith(query) || item.definition.toLowerCase().includes(query);
-            const matchesCat = (currentCategory === 'All' || item.category === currentCategory);
-            return matchesQuery && matchesCat;
+        const query = searchInput.value.toLowerCase();
+        const filtered = glossaryData.filter(item => {
+            const matchQuery = item.term.toLowerCase().includes(query) || item.definition.toLowerCase().includes(query);
+            const matchCat = currentCategory === 'All' || item.category === currentCategory;
+            return matchQuery && matchCat;
         });
-        displayResults(filtered);
+        render(filtered);
     }
 
-    function displayResults(data) {
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = '';
-        data.forEach(item => {
-            resultsDiv.innerHTML += `
-                <div class="card">
-                    <span class="term">${item.term}</span>
-                    <p>${item.definition}</p>
-                    <span class="source">Sursa: ${item.source} | Categorie: ${item.category}</span>
-                </div>
-            `;
-        });
-        document.getElementById('counter').innerText = `${data.length} termeni afișați`;
+    function render(data) {
+        const container = document.getElementById('results');
+        container.innerHTML = data.map(item => `
+            <div class="card">
+                <div class="term">${item.term}</div>
+                <p>${item.definition}</p>
+                <div class="source-tag">Sursa: ${item.source} | Categorie: ${item.category}</div>
+            </div>
+        `).join('');
     }
 
-    document.getElementById('searchInput').addEventListener('input', filterData);
-    
-    // Inițializare
-    displayResults(glossary);
+    searchInput.addEventListener('input', filterData);
+    window.onload = () => render(glossaryData);
 </script>
-
 </body>
 </html>
