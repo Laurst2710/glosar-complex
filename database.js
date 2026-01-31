@@ -38,4 +38,16 @@ const glossaryData = [
     { term: "Secure Sockets Layer (SSL)", category: "Security", source: "B_C_T.pdf", definition: "Protocol de securitate standard pentru stabilirea unei legături criptate între un server și un browser." },
     { term: "Trojan Horse", category: "Security", source: "B_C_T.pdf", definition: "Program malițios deghizat într-o aplicație legitimă pentru a păcăli utilizatorul." },
     // --- END BLOC 4: SECURITATE & CRIPTARE ---
+    // --- START BLOC 5: SOFTWARE & SISTEME DE OPERARE ---
+    { term: "Application Software", category: "Software", source: "B_C_T.pdf", definition: "Programe concepute pentru a ajuta utilizatorul să îndeplinească sarcini specifice (ex: editoare de text)." },
+    { term: "Device Driver", category: "Software", source: "B_C_T.pdf", definition: "Software specializat care permite sistemului de operare să comunice cu un hardware specific." },
+    { term: "File System", category: "Software", source: "B_C_T.pdf", definition: "Metodă de organizare și stocare a fișierelor pe un suport de date (ex: NTFS, FAT32)." },
+    { term: "Kernel", category: "Software", source: "B_C_T.pdf", definition: "Componenta centrală a unui sistem de operare care gestionează resursele hardware." },
+    { term: "Multitasking", category: "Software", source: "B_C_T.pdf", definition: "Capacitatea unui sistem de operare de a executa mai multe procese sau aplicații simultan." },
+    { term: "Open Source", category: "Software", source: "Glossary.pdf", definition: "Software al cărui cod sursă este disponibil public pentru a fi utilizat, modificat și distribuit." },
+    { term: "Process", category: "Software", source: "B_C_T.pdf", definition: "O instanță a unui program aflat în execuție, care consumă memorie și timp de procesor." },
+    { term: "Registry", category: "Software", source: "B_C_T.pdf", definition: "Bază de date ierarhică ce stochează setările de configurare și opțiunile pentru Windows." },
+    { term: "System Software", category: "Software", source: "B_C_T.pdf", definition: "Software-ul de bază creat pentru a controla hardware-ul și a oferi o platformă pentru aplicații." },
+    { term: "Virtual Machine (VM)", category: "Software", source: "B_C_T.pdf", definition: "Emularea unui sistem informatic care rulează ca un program în interiorul altui sistem de operare." },
+    // --- END BLOC 5: SOFTWARE & SISTEME DE OPERARE ---
 ];
